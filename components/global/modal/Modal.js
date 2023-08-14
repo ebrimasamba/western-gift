@@ -43,7 +43,7 @@ const Modal = ({ isOpen, closeModal }) => {
             <Dialog.Panel className={"bg-gray-400 max-w-5xl w-full relative"}>
               {/* <Dialog.Title>Deactivate account</Dialog.Title> */}
 
-              <div className="absolute bottom-9 inset-x-0 text-center z-10 text-lg">
+              <div className="fixed sm:absolute bottom-10 inset-x-0 text-center z-10 text-lg">
                 <h2 className="text-xl leading-5 font-semibold tracking-tighter text-white heading-font">
                   Tropics Building
                 </h2>
@@ -51,7 +51,7 @@ const Modal = ({ isOpen, closeModal }) => {
                   Senegambia
                 </p>
               </div>
-              <div className="bg-white/50 h-15 w-15 absolute z-[999] right-4 top-5 sm:top-2 rounded-full">
+              <div className="bg-white/50 h-15 w-15 fixed sm:absolute z-[999] right-4 top-5 sm:top-2 rounded-full">
                 <BsX
                   className="text-black text-3xl font-bold cursor-pointer"
                   onClick={() => closeModal()}
