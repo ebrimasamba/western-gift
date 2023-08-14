@@ -1,45 +1,16 @@
 import Head from "next/head";
-import React, { useEffect, useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
+import React, { useState } from "react";
+import Modal from "../components/global/modal/Modal";
 
 export default function Home() {
-  const form = useRef();
-
-  const sendEmail = (e) => {
-    e.preventDefault();
-
-    emailjs
-      .sendForm(
-        "service_6y82qye",
-        "template_5bjk4oq",
-        form.current,
-        "arzcU9S9jMmm1IUbR"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
   };
 
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
-
-  useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        setLat(position.coords.latitude);
-        setLng(position.coords.longitude);
-        // console.log("Latitude: " + latitude + " , Longitude: " + longitude);
-      });
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    }
-  }, []);
-
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   return (
     <>
       <Head>
@@ -49,121 +20,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex min-h-screen flex-col justify-center py-12 sm:px-6 lg:px-8 bg-slate-800">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
-            className="mx-auto h-12 w-auto"
-            src="/logo.jpeg"
-            alt="Your Company"
-          />
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-white">
-            You have been gifted D3000, Sign up to receive
-          </h2>
-          {/* <p className="mt-2 text-center text-sm text-gray-600">
-            Or{" "}
-            <a
-              href="#"
-              className="font-medium text-primary hover:text-indigo-500"
-            >
-              start your 14-day free trial
-            </a>
-          </p> */}
-        </div>
-
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6" onSubmit={sendEmail} ref={form}>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Email address
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Password
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              {/* <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <label
-                    htmlFor="remember-me"
-                    className="ml-2 block text-sm text-gray-900"
-                  >
-                    Remember me
-                  </label>
-                </div>
-
-                <div className="text-sm">
-                  <a href="#" className="font-medium text-gray-700">
-                    Forgot your password?
-                  </a>
-                </div>
-              </div> */}
-
-              <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-primary py-2 px-3 text-sm font-semibold text-gray-700 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                >
-                  Create Account
-                </button>
-              </div>
-
-              <div className="w-0 h-0 overflow-hidden">
-                <input
-                  id="long"
-                  name="long"
-                  type="text"
-                  autoComplete=""
-                  required
-                  value={lng}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-                />
-              </div>
-
-              <div className="w-0 h-0 overflow-hidden">
-                <input
-                  id="lat"
-                  name="lat"
-                  type="text"
-                  autoComplete="lat"
-                  required
-                  value={lat}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-                />
-              </div>
-            </form>
-          </div>
-        </div>
+      <div className="h-screen flex items-center justify-center">
+        <Modal isOpen={isOpen} closeModal={closeModal} />
+        <button className="bg-red-400 py-5 px-16" onClick={openModal}>
+          {" "}
+          Click Me
+        </button>
       </div>
+      <div className="h-screen"></div>
+      <div className="h-screen"></div>
     </>
   );
 }
